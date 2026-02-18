@@ -225,6 +225,55 @@
     .repo-card:nth-child(3) { background: var(--lavender); }
     .repo-card:nth-child(4) { background: var(--peach); }
 
+    /* Decision type cards */
+    .decision-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .decision-card {
+      padding: 20px;
+      border-radius: var(--radius);
+      background: var(--sky);
+    }
+
+    .decision-card:nth-child(2) { background: var(--lavender); }
+    .decision-card:nth-child(3) { background: var(--mint); }
+    .decision-card:nth-child(4) { background: var(--peach); }
+    .decision-card:nth-child(5) { background: #e0f0f8; }
+
+    .decision-placeholder {
+      background: rgba(0,0,0,0.05);
+      border: 2px dashed rgba(0,0,0,0.15);
+      border-radius: 10px;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .decision-card h3 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .decision-card p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 0;
+    }
+
+    .section h3 {
+      font-size: 1.2rem;
+      margin-top: 32px;
+      margin-bottom: 8px;
+    }
+
     /* Code block */
     .code-block {
       background: var(--text);
@@ -292,7 +341,7 @@
       <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="technical.html" class="active">Technical details</a>
-        <a href="https://github.com/egradman/extendo.sh" target="_blank">GitHub</a>
+        <a href="https://github.com/egradman/setae-cli" target="_blank">GitHub</a>
       </div>
     </div>
   </nav>
@@ -350,6 +399,69 @@
       <p>The CLI is also available as a <a href="https://github.com/egradman/setae-cli">Claude Code skill</a>, so Claude can call it natively inside agent workflows.</p>
     </div>
 
+    <!-- Decision types -->
+    <div class="section">
+      <h2>Decision types</h2>
+      <p>Agents don't send you walls of text. They send structured UI tailored to the decision at hand.</p>
+      <div class="decision-grid">
+        <div class="decision-card">
+          <div class="decision-placeholder">Screenshot coming soon</div>
+          <h3>Yes / No</h3>
+          <p>Binary approval gates. "Deploy to prod?" &mdash; tap and done.</p>
+        </div>
+        <div class="decision-card">
+          <div class="decision-placeholder">Screenshot coming soon</div>
+          <h3>Multiple choice</h3>
+          <p>Pick one from a list. "Which fix?" &mdash; Retry, Skip, or Abort.</p>
+        </div>
+        <div class="decision-card">
+          <div class="decision-placeholder">Screenshot coming soon</div>
+          <h3>Checklist</h3>
+          <p>Select multiple items. "Which features to include?" &mdash; check the ones you want.</p>
+        </div>
+        <div class="decision-card">
+          <div class="decision-placeholder">Screenshot coming soon</div>
+          <h3>Ranking</h3>
+          <p>Drag to reorder. "Priority?" &mdash; arrange Auth, Search, Billing by importance.</p>
+        </div>
+        <div class="decision-card">
+          <div class="decision-placeholder">Screenshot coming soon</div>
+          <h3>Document review</h3>
+          <p>Read and annotate a spec, plan, or diff right on your phone.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connecting to agents -->
+    <div class="section">
+      <h2>Connect to your agents</h2>
+      <p>Extendo works with whatever you already use. Here's how to wire it up.</p>
+
+      <h3>Claude Code</h3>
+      <p>Install the Extendo CLI as a Claude Code skill. Claude can then send you messages, create decisions, and block on your approval &mdash; all natively within agent workflows.</p>
+      <div class="code-block">
+        <span class="comment"># Install the skill</span><br>
+        <span class="cmd">claude</span> <span class="flag">skill install</span> <span class="string">extendo-cli</span><br><br>
+        <span class="comment"># Claude can now use it in any session</span><br>
+        <span class="comment"># "Send the user a decision gate before deploying"</span><br>
+        <span class="comment"># Claude will call: extendo decide --type yes_no "Deploy to prod?"</span>
+      </div>
+
+      <h3>OpenClaw</h3>
+      <p>Coming soon. OpenClaw integration will use the same CLI under the hood &mdash; any agent that can run shell commands can use Extendo.</p>
+
+      <h3>Custom agents / scripts</h3>
+      <p>If your agent can run a shell command, it can use Extendo. The CLI blocks until the human responds and returns the decision as structured output (JSON or plain text).</p>
+      <div class="code-block">
+        <span class="comment">#!/bin/bash</span><br>
+        <span class="comment"># In any script or pipeline</span><br>
+        <span class="cmd">DECISION</span>=$(<span class="cmd">extendo</span> <span class="flag">decide</span> <span class="flag">--type</span> <span class="string">yes_no</span> <span class="flag">--json</span> <span class="string">"Ship it?"</span>)<br>
+        <span class="cmd">if</span> [ "$DECISION" = <span class="string">"yes"</span> ]; <span class="cmd">then</span><br>
+        &nbsp;&nbsp;<span class="cmd">deploy_to_prod</span><br>
+        <span class="cmd">fi</span>
+      </div>
+    </div>
+
     <!-- Backends -->
     <div class="section">
       <h2>Backends</h2>
@@ -371,11 +483,6 @@
           <p>Bridges Slack channels and threads into the unified inbox.</p>
           <code>setae-slack-adapter</code>
         </a>
-        <a href="https://github.com/egradman/setae-backends" class="repo-card" target="_blank">
-          <h3>Push relay</h3>
-          <p>APNs relay for real-time push notifications to iOS and Watch.</p>
-          <code>setae-push-relay</code>
-        </a>
       </div>
     </div>
 
@@ -395,13 +502,8 @@
         </a>
         <a href="https://github.com/egradman/setae-backends" class="repo-card" target="_blank">
           <h3>Backends</h3>
-          <p>Core library, adapters (Claude, Slack), and push relay. All in one monorepo.</p>
+          <p>Core library and adapters (Claude, Slack). All in one monorepo.</p>
           <code>egradman/setae-backends</code>
-        </a>
-        <a href="https://github.com/egradman/extendo.sh" class="repo-card" target="_blank">
-          <h3>This website</h3>
-          <p>Landing page. Static HTML deployed to Cloudflare Pages.</p>
-          <code>egradman/extendo.sh</code>
         </a>
       </div>
     </div>
@@ -412,7 +514,7 @@
     <div class="footer-inner">
       <p>Extendo &mdash; your agents can reach you anywhere.</p>
       <div class="links">
-        <a href="https://github.com/egradman/extendo.sh" target="_blank">GitHub</a>
+        <a href="https://github.com/egradman/setae-cli" target="_blank">GitHub</a>
         <a href="https://x.com" target="_blank">X / Twitter</a>
       </div>
     </div>
