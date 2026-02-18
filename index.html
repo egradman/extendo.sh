@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extendo — Your agents can reach you anywhere</title>
+  <meta name="description" content="Your phone is now a cockpit for AI agents. Push notifications, voice replies, structured decisions. Works with any agent, any orchestrator.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --sky: #e8f4fd;
+      --sky-deep: #c5e3f6;
+      --blue: #4a9eda;
+      --blue-dark: #2b7cbf;
+      --lavender: #e8e0f0;
+      --peach: #fde8d8;
+      --mint: #d8f0e8;
+      --text: #2a2a3a;
+      --text-light: #6a6a7a;
+      --white: #ffffff;
+      --radius: 16px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.2;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Nav */
+    nav {
+      padding: 20px 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .logo span {
+      color: var(--blue);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-light);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 60px 0 0;
+      text-align: center;
+      background: linear-gradient(180deg, var(--white) 0%, var(--sky) 100%);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--blue);
+    }
+
+    .hero .subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      color: var(--text-light);
+      max-width: 560px;
+      margin: 0 auto 40px;
+    }
+
+    /* Signup form */
+    .signup-form {
+      display: flex;
+      gap: 8px;
+      max-width: 440px;
+      margin: 0 auto 48px;
+      position: relative;
+    }
+
+    .signup-form input[type="email"] {
+      flex: 1;
+      padding: 14px 20px;
+      border-radius: 50px;
+      border: 2px solid var(--sky-deep);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      background: var(--white);
+    }
+
+    .signup-form input[type="email"]:focus {
+      border-color: var(--blue);
+    }
+
+    .signup-form button {
+      padding: 14px 28px;
+      border-radius: 50px;
+      border: none;
+      background: var(--blue);
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      white-space: nowrap;
+    }
+
+    .signup-form button:hover {
+      background: var(--blue-dark);
+      transform: translateY(-1px);
+    }
+
+    .signup-form button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .signup-msg {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 0.9rem;
+      min-height: 1.4em;
+    }
+
+    .signup-msg.success { color: #2d8a4e; }
+    .signup-msg.error { color: #c0392b; }
+
+    .hero-image {
+      max-width: 720px;
+      margin: 0 auto;
+      border-radius: 20px 20px 0 0;
+      overflow: hidden;
+    }
+
+    .hero-image img {
+      width: 100%;
+      display: block;
+    }
+
+    /* Pain section */
+    .pain {
+      padding: 80px 0;
+      background: var(--sky);
+    }
+
+    .pain .container {
+      max-width: 700px;
+      text-align: center;
+    }
+
+    .pain .mono {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      background: var(--text);
+      color: #a8d8a8;
+      padding: 16px 24px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+      display: inline-block;
+    }
+
+    .pain h2 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 16px;
+    }
+
+    .pain p {
+      font-size: 1.15rem;
+      color: var(--text-light);
+    }
+
+    /* Features */
+    .features {
+      padding: 100px 0;
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 60px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      padding: 32px;
+      border-radius: var(--radius);
+      transition: transform 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .feature-card:nth-child(1) { background: var(--sky); }
+    .feature-card:nth-child(2) { background: var(--lavender); }
+    .feature-card:nth-child(3) { background: var(--peach); }
+    .feature-card:nth-child(4) { background: var(--mint); }
+    .feature-card:nth-child(5) { background: #f0e8f8; }
+    .feature-card:nth-child(6) { background: #e0f0f8; }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      color: var(--text-light);
+      font-size: 0.95rem;
+    }
+
+    /* How it works */
+    .how {
+      padding: 100px 0;
+      background: linear-gradient(180deg, var(--white) 0%, var(--sky) 50%, var(--white) 100%);
+    }
+
+    .how h2 {
+      text-align: center;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 60px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .step {
+      text-align: center;
+      position: relative;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      background: var(--blue);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin: 0 auto 16px;
+    }
+
+    .step h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* Open protocol */
+    .protocol {
+      padding: 80px 0;
+    }
+
+    .protocol .container {
+      text-align: center;
+      max-width: 700px;
+    }
+
+    .protocol h2 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 16px;
+    }
+
+    .protocol p {
+      font-size: 1.15rem;
+      color: var(--text-light);
+      margin-bottom: 32px;
+    }
+
+    .code-block {
+      background: var(--text);
+      color: #d4d4d4;
+      padding: 24px;
+      border-radius: 12px;
+      text-align: left;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+
+    .code-block .comment { color: #6a9955; }
+    .code-block .cmd { color: #a8d8a8; }
+    .code-block .flag { color: #9cdcfe; }
+    .code-block .string { color: #ce9178; }
+
+    /* Origin story */
+    .origin {
+      padding: 80px 0;
+      background: var(--sky);
+    }
+
+    .origin .container {
+      text-align: center;
+      max-width: 640px;
+    }
+
+    .origin blockquote {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .origin p {
+      color: var(--text-light);
+      font-size: 1.05rem;
+    }
+
+    /* CTA */
+    .cta {
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 16px;
+    }
+
+    .cta p {
+      color: var(--text-light);
+      font-size: 1.15rem;
+      margin-bottom: 32px;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--blue);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--blue-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text);
+      padding: 14px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      border: 2px solid var(--sky-deep);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--blue);
+      transform: translateY(-1px);
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--sky-deep);
+    }
+
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      color: var(--text-light);
+      font-size: 0.85rem;
+    }
+
+    footer .links {
+      display: flex;
+      gap: 24px;
+    }
+
+    footer a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: var(--text);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .steps {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .nav-links {
+        gap: 20px;
+      }
+
+      footer .container {
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="/" class="logo">extendo<span>.</span></a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="https://github.com/nicktill/extendo" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Your agents can <em>reach you</em> anywhere.</h1>
+      <p class="subtitle">
+        Your phone becomes the nerve endings for your AI agents. They keep working. They buzz you when they need you.
+      </p>
+      <form class="signup-form" id="hero-signup"
+            action="https://buttondown.com/api/emails/embed-subscribe/extendo"
+            method="post" target="popupwindow"
+            onsubmit="return handleSignup(event, this)">
+        <input type="email" name="email" placeholder="you@example.com" required>
+        <button type="submit">Get early access</button>
+      </form>
+      <div class="signup-msg" id="hero-msg"></div>
+    </div>
+    <div class="hero-image">
+      <img src="hero.png" alt="A robot hand and human hand reaching toward each other">
+    </div>
+  </section>
+
+  <section class="pain">
+    <div class="container">
+      <div class="mono">$ ssh egradman@macbook-pro.local</div>
+      <h2>Stop SSHing into your laptop like an animal.</h2>
+      <p>
+        When you're at your keyboard, Claude Code gives you godlike powers. When you step away, you're cut off. Extendo fixes that.
+      </p>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="container">
+      <h2>Decisions, not chat.</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F514;</div>
+          <h3>Push notifications</h3>
+          <p>Your agents buzz you when they need you. Voice-reply from wherever you are and keep moving.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x2705;</div>
+          <h3>Structured decisions</h3>
+          <p>Yes/no buttons, rankings, checklists, document review. Not walls of text. Tap and done.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F399;</div>
+          <h3>Voice-first</h3>
+          <p>Push-to-talk with auto-transcription. Apple Watch starts recording when you raise your wrist.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4F1;</div>
+          <h3>Unified inbox</h3>
+          <p>Claude Code, Slack, custom backends &mdash; all your agent threads in one live dashboard.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x26A1;</div>
+          <h3>Real-time threads</h3>
+          <p>Watch agents update their status live. See the work happening, not just the result.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F527;</div>
+          <h3>Open protocol</h3>
+          <p>CLI that any agent can call. TypeScript adapter interface. If you can write a webhook, you can build a backend.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how" id="how">
+    <div class="container">
+      <h2>How it works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Your agent hits a gate</h3>
+          <p>Needs approval, a choice, a review &mdash; any point where a human should weigh in.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Your phone buzzes</h3>
+          <p>Rich push notification with structured UI. Tap a button, record a voice note, rank options.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Your agent keeps going</h3>
+          <p>Decision flows back instantly. The agent resumes. You go back to your garden.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="protocol">
+    <div class="container">
+      <h2>Works with any orchestrator.</h2>
+      <p>Not an orchestrator. Not a workflow tool. The human interface layer for whatever you already use.</p>
+      <div class="code-block">
+        <span class="comment"># From any agent, any script, any pipeline</span><br>
+        <span class="cmd">extendo</span> <span class="flag">send</span> <span class="string">"Build complete. Deploy to prod?"</span><br>
+        <span class="cmd">extendo</span> <span class="flag">decide</span> <span class="flag">--type</span> <span class="string">yes_no</span> <span class="string">"Ship it?"</span><br>
+        <span class="cmd">extendo</span> <span class="flag">decide</span> <span class="flag">--type</span> <span class="string">rank</span> <span class="string">"Priority order?"</span> <span class="flag">--options</span> <span class="string">"Auth,Search,Billing"</span><br>
+        <span class="cmd">extendo</span> <span class="flag">artifact</span> <span class="flag">--type</span> <span class="string">document_review</span> <span class="flag">--file</span> <span class="string">spec.md</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="origin">
+    <div class="container">
+      <blockquote>"I used this app to build itself."</blockquote>
+      <p>
+        Every design decision, every approval gate, every code review &mdash; from the phone while away from the desk. Built by an agent workflow. Approved from a garden.
+      </p>
+    </div>
+  </section>
+
+  <section class="cta" id="cta">
+    <div class="container">
+      <h2>Ready to extend your reach?</h2>
+      <p>iOS app + Apple Watch + CLI. Coming soon. Get notified.</p>
+      <form class="signup-form" id="cta-signup"
+            action="https://buttondown.com/api/emails/embed-subscribe/extendo"
+            method="post" target="popupwindow"
+            onsubmit="return handleSignup(event, this)">
+        <input type="email" name="email" placeholder="you@example.com" required>
+        <button type="submit">Notify me</button>
+      </form>
+      <div class="signup-msg" id="cta-msg"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>Extendo &mdash; your agents can reach you anywhere.</p>
+      <div class="links">
+        <a href="https://github.com/nicktill/extendo" target="_blank">GitHub</a>
+        <a href="https://x.com" target="_blank">X / Twitter</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function handleSignup(e, form) {
+      e.preventDefault();
+      var email = form.querySelector('input[type="email"]').value;
+      var btn = form.querySelector('button');
+      var msgId = form.id === 'hero-signup' ? 'hero-msg' : 'cta-msg';
+      var msgEl = document.getElementById(msgId);
+
+      btn.disabled = true;
+      btn.textContent = 'Signing up...';
+      msgEl.textContent = '';
+      msgEl.className = 'signup-msg';
+
+      fetch('https://buttondown.com/api/emails/embed-subscribe/extendo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'email=' + encodeURIComponent(email),
+        mode: 'no-cors'
+      }).then(function() {
+        msgEl.textContent = "You're in. We'll be in touch.";
+        msgEl.className = 'signup-msg success';
+        form.querySelector('input[type="email"]').value = '';
+        btn.textContent = 'Signed up!';
+      }).catch(function() {
+        msgEl.textContent = 'Something went wrong. Try again?';
+        msgEl.className = 'signup-msg error';
+        btn.disabled = false;
+        btn.textContent = form.id === 'hero-signup' ? 'Get early access' : 'Notify me';
+      });
+
+      return false;
+    }
+  </script>
+</body>
+</html>
