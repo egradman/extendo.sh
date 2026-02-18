@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technical Details — Extendo</title>
+  <meta name="description" content="Architecture, CLI, backends, and open protocol details for Extendo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --sky: #e8f4fd;
+      --sky-deep: #c5e3f6;
+      --blue: #4a9eda;
+      --blue-dark: #2b7cbf;
+      --lavender: #e8e0f0;
+      --peach: #fde8d8;
+      --mint: #d8f0e8;
+      --amber: #fef3c7;
+      --amber-border: #f59e0b;
+      --text: #2a2a3a;
+      --text-light: #6a6a7a;
+      --white: #ffffff;
+      --radius: 16px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.2;
+    }
+
+    a { color: var(--blue-dark); }
+    a:hover { color: var(--blue); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Nav */
+    nav {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--sky-deep);
+    }
+
+    nav .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .logo span { color: var(--blue); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-light);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--text); }
+
+    /* Content */
+    .page-header {
+      padding: 60px 0 40px;
+      background: linear-gradient(180deg, var(--white) 0%, var(--sky) 100%);
+    }
+
+    .page-header h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+
+    .page-header p {
+      font-size: 1.15rem;
+      color: var(--text-light);
+    }
+
+    /* Rename notice */
+    .notice {
+      background: var(--amber);
+      border: 2px solid var(--amber-border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 32px 0;
+    }
+
+    .notice strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .notice p {
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    /* Sections */
+    .section {
+      padding: 48px 0;
+      border-bottom: 1px solid var(--sky-deep);
+    }
+
+    .section:last-of-type {
+      border-bottom: none;
+    }
+
+    .section h2 {
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+    }
+
+    .section p {
+      margin-bottom: 16px;
+      color: var(--text-light);
+    }
+
+    .section p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Architecture diagram */
+    .arch {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .arch-box {
+      padding: 24px;
+      border-radius: var(--radius);
+      text-align: center;
+    }
+
+    .arch-box h3 {
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+
+    .arch-box p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 0;
+    }
+
+    .arch-box.brain { background: var(--lavender); }
+    .arch-box.muscle { background: var(--mint); }
+    .arch-box.nerve { background: var(--sky); }
+
+    /* Repo cards */
+    .repo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .repo-card {
+      padding: 24px;
+      border-radius: var(--radius);
+      background: var(--sky);
+      text-decoration: none;
+      color: var(--text);
+      transition: transform 0.2s;
+      display: block;
+    }
+
+    .repo-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .repo-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+
+    .repo-card p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 0;
+    }
+
+    .repo-card code {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.8rem;
+      background: rgba(0,0,0,0.06);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .repo-card:nth-child(2) { background: var(--mint); }
+    .repo-card:nth-child(3) { background: var(--lavender); }
+    .repo-card:nth-child(4) { background: var(--peach); }
+
+    /* Code block */
+    .code-block {
+      background: var(--text);
+      color: #d4d4d4;
+      padding: 24px;
+      border-radius: 12px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      overflow-x: auto;
+      margin: 24px 0;
+    }
+
+    .code-block .comment { color: #6a9955; }
+    .code-block .cmd { color: #a8d8a8; }
+    .code-block .flag { color: #9cdcfe; }
+    .code-block .string { color: #ce9178; }
+
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--sky-deep);
+    }
+
+    footer .footer-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      color: var(--text-light);
+      font-size: 0.85rem;
+    }
+
+    footer .links {
+      display: flex;
+      gap: 24px;
+    }
+
+    footer a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+
+    footer a:hover { color: var(--text); }
+
+    @media (max-width: 768px) {
+      .arch { grid-template-columns: 1fr; }
+      .repo-grid { grid-template-columns: 1fr; }
+      .nav-links { gap: 20px; }
+      footer .footer-inner { flex-direction: column; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="logo">extendo<span>.</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="technical.html" class="active">Technical details</a>
+        <a href="https://github.com/egradman/extendo.sh" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="container">
+      <h1>Technical details</h1>
+      <p>Architecture, CLI, backends, and the open protocol.</p>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="notice">
+      <strong>Heads up: repos are moving.</strong>
+      <p>We're renaming from "setae" to "extendo" across all repos. The links below still point to the current locations &mdash; they'll redirect once the rename is complete.</p>
+    </div>
+
+    <!-- Architecture -->
+    <div class="section">
+      <h2>Architecture</h2>
+      <p>Extendo is not an orchestrator. It's the human interface layer. Three pieces, clean separation:</p>
+      <div class="arch">
+        <div class="arch-box brain">
+          <h3>The brains</h3>
+          <p>Your orchestrator &mdash; Beads, Antfarm, custom scripts. Decides <em>when</em> to ask a human.</p>
+        </div>
+        <div class="arch-box muscle">
+          <h3>The muscle</h3>
+          <p>Your agents &mdash; Claude Code, OpenClaw, whatever. Decides <em>what</em> to ask.</p>
+        </div>
+        <div class="arch-box nerve">
+          <h3>The nerve endings</h3>
+          <p>Extendo &mdash; iOS app, Watch, CLI. Decides <em>how it feels</em> to answer.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLI -->
+    <div class="section">
+      <h2>The CLI</h2>
+      <p>Any agent, any script, any pipeline can reach a human through the Extendo CLI. It blocks until the human responds and returns structured data &mdash; not chat text.</p>
+      <div class="code-block">
+        <span class="comment"># Send a message</span><br>
+        <span class="cmd">extendo</span> <span class="flag">send</span> <span class="string">"Build complete. 3 warnings."</span><br><br>
+        <span class="comment"># Binary decision — returns "yes" or "no"</span><br>
+        <span class="cmd">extendo</span> <span class="flag">decide</span> <span class="flag">--type</span> <span class="string">yes_no</span> <span class="string">"Deploy to prod?"</span><br><br>
+        <span class="comment"># Multiple choice — returns the selected option</span><br>
+        <span class="cmd">extendo</span> <span class="flag">decide</span> <span class="flag">--type</span> <span class="string">multiple_choice</span> <span class="string">"Which fix?"</span> <span class="flag">--options</span> <span class="string">"Retry,Skip,Abort"</span><br><br>
+        <span class="comment"># Rank options — returns ordered list</span><br>
+        <span class="cmd">extendo</span> <span class="flag">decide</span> <span class="flag">--type</span> <span class="string">rank</span> <span class="string">"Priority?"</span> <span class="flag">--options</span> <span class="string">"Auth,Search,Billing"</span><br><br>
+        <span class="comment"># Document review — returns annotations</span><br>
+        <span class="cmd">extendo</span> <span class="flag">artifact</span> <span class="flag">--type</span> <span class="string">document_review</span> <span class="flag">--file</span> <span class="string">spec.md</span>
+      </div>
+      <p>The CLI is also available as a <a href="https://github.com/egradman/setae-cli">Claude Code skill</a>, so Claude can call it natively inside agent workflows.</p>
+    </div>
+
+    <!-- Backends -->
+    <div class="section">
+      <h2>Backends</h2>
+      <p>Extendo uses a clean adapter interface. Each backend translates between an external service and the Extendo protocol. Writing a new backend is just implementing a TypeScript interface.</p>
+      <p>Currently shipping:</p>
+      <div class="repo-grid">
+        <a href="https://github.com/egradman/setae-backends" class="repo-card" target="_blank">
+          <h3>Core library</h3>
+          <p>Shared types, adapter interface, protocol definitions.</p>
+          <code>setae-core</code>
+        </a>
+        <a href="https://github.com/egradman/setae-backends" class="repo-card" target="_blank">
+          <h3>Claude adapter</h3>
+          <p>Connects Claude Code sessions to Extendo. Powers the CLI skill.</p>
+          <code>setae-claude-adapter</code>
+        </a>
+        <a href="https://github.com/egradman/setae-backends" class="repo-card" target="_blank">
+          <h3>Slack adapter</h3>
+          <p>Bridges Slack channels and threads into the unified inbox.</p>
+          <code>setae-slack-adapter</code>
+        </a>
+        <a href="https://github.com/egradman/setae-backends" class="repo-card" target="_blank">
+          <h3>Push relay</h3>
+          <p>APNs relay for real-time push notifications to iOS and Watch.</p>
+          <code>setae-push-relay</code>
+        </a>
+      </div>
+    </div>
+
+    <!-- Repos -->
+    <div class="section">
+      <h2>Repositories</h2>
+      <div class="repo-grid">
+        <a href="https://github.com/egradman/vchat" class="repo-card" target="_blank">
+          <h3>iOS app</h3>
+          <p>SwiftUI app for iPhone and Apple Watch. Voice-first, structured decisions, push notifications.</p>
+          <code>egradman/vchat</code>
+        </a>
+        <a href="https://github.com/egradman/setae-cli" class="repo-card" target="_blank">
+          <h3>CLI</h3>
+          <p>Command-line tool and Claude Code skill. The agent-facing interface.</p>
+          <code>egradman/setae-cli</code>
+        </a>
+        <a href="https://github.com/egradman/setae-backends" class="repo-card" target="_blank">
+          <h3>Backends</h3>
+          <p>Core library, adapters (Claude, Slack), and push relay. All in one monorepo.</p>
+          <code>egradman/setae-backends</code>
+        </a>
+        <a href="https://github.com/egradman/extendo.sh" class="repo-card" target="_blank">
+          <h3>This website</h3>
+          <p>Landing page. Static HTML deployed to Cloudflare Pages.</p>
+          <code>egradman/extendo.sh</code>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>Extendo &mdash; your agents can reach you anywhere.</p>
+      <div class="links">
+        <a href="https://github.com/egradman/extendo.sh" target="_blank">GitHub</a>
+        <a href="https://x.com" target="_blank">X / Twitter</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
