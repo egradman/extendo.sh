@@ -178,7 +178,7 @@
     .hero-image {
       max-width: 720px;
       margin: 0 auto;
-      border-radius: 20px 20px 0 0;
+      border-radius: 20px;
       overflow: hidden;
     }
 
@@ -364,7 +364,6 @@
 
     .origin .container {
       text-align: center;
-      max-width: 640px;
     }
 
     .origin blockquote {
@@ -511,9 +510,12 @@
 
   <section class="hero">
     <div class="container">
-      <h1>Your agents can <em>reach you</em> anywhere.</h1>
+      <h1>Extend your <em>agents' reach</em>.</h1>
       <p class="subtitle">
         An iOS app that puts your AI agents in your pocket. Walk away from your desk. They keep working, and reach out when they need you.
+      </p>
+      <p class="subtitle">
+        Buttons, rankings, checklists, kanban boards, and document reviews. Thoughtful UX for the decisions that actually matter.
       </p>
       <form class="signup-form" id="hero-signup"
             action="https://buttondown.com/api/emails/embed-subscribe/extendo"
@@ -531,23 +533,31 @@
 
   <section class="pain">
     <div class="container">
-      <div class="mono">$ ssh egradman@macbook-pro.local</div>
       <h2>Stop SSHing into your laptop like a savage.</h2>
       <p>
-        When you're at your keyboard, Claude Code gives you godlike powers. When you step away, you're cut off. Extendo fixes that.
+        When you're at your keyboard, Claude Code gives you godlike powers. When you step away, you're cut off. Extend your agents' reach with Extendo.
       </p>
-      <p style="margin-top: 16px;">
-        Not with a wall of text, but with a button, a ranking, a checklist, a kanban board. Thoughtful UX for the decisions that actually matter.
-      </p>
+    </div>
+  </section>
+
+  <section class="protocol">
+    <div class="container">
+      <h2>Works with any orchestrator.</h2>
+      <p>Not an orchestrator. Not a workflow tool. The human interface layer for whatever you already use.</p>
+      <p style="margin-top: 12px;">You own the backend infrastructure. No subscriptions. Works as a standalone chat + decision interface, or use it alongside your existing chat system (Slack, Telegram, etc).</p>
+      <div class="code-block">
+        <span class="comment"># From any agent, any script, any pipeline</span><br>
+        <span class="cmd">extendo</span> <span class="flag">send</span> <span class="string">"Build complete. Deploy to prod?"</span><br>
+        <span class="cmd">extendo</span> <span class="flag">decide</span> <span class="flag">--type</span> <span class="string">yes_no</span> <span class="string">"Ship it?"</span><br>
+        <span class="cmd">extendo</span> <span class="flag">decide</span> <span class="flag">--type</span> <span class="string">rank</span> <span class="string">"Priority order?"</span> <span class="flag">--options</span> <span class="string">"Auth,Search,Billing"</span><br>
+        <span class="cmd">extendo</span> <span class="flag">artifact</span> <span class="flag">--type</span> <span class="string">document_review</span> <span class="flag">--file</span> <span class="string">spec.md</span>
+      </div>
     </div>
   </section>
 
   <section class="features" id="features">
     <div class="container">
       <h2>Decisions, not chat.</h2>
-      <p style="text-align: center; max-width: 600px; margin: -40px auto 60px; font-size: 1.15rem; color: var(--text-light);">
-        Your agents don't send you walls of text. They send you buttons, rankings, checklists, document reviews. Real UI designed for real decisions.
-      </p>
       <div class="feature-grid">
         <div class="feature-card">
           <div class="feature-icon">&#x1F514;</div>
@@ -600,33 +610,26 @@
         <div class="step">
           <div class="step-number">3</div>
           <h3>Your agent keeps going</h3>
-          <p>Decision flows back instantly. The agent resumes. You go back to your garden.</p>
+          <p>Decision flows back instantly. The agent resumes. You resume talking with your human friends.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="protocol">
-    <div class="container">
-      <h2>Works with any orchestrator.</h2>
-      <p>Not an orchestrator. Not a workflow tool. The human interface layer for whatever you already use.</p>
-      <div class="code-block">
-        <span class="comment"># From any agent, any script, any pipeline</span><br>
-        <span class="cmd">extendo</span> <span class="flag">send</span> <span class="string">"Build complete. Deploy to prod?"</span><br>
-        <span class="cmd">extendo</span> <span class="flag">decide</span> <span class="flag">--type</span> <span class="string">yes_no</span> <span class="string">"Ship it?"</span><br>
-        <span class="cmd">extendo</span> <span class="flag">decide</span> <span class="flag">--type</span> <span class="string">rank</span> <span class="string">"Priority order?"</span> <span class="flag">--options</span> <span class="string">"Auth,Search,Billing"</span><br>
-        <span class="cmd">extendo</span> <span class="flag">artifact</span> <span class="flag">--type</span> <span class="string">document_review</span> <span class="flag">--file</span> <span class="string">spec.md</span>
       </div>
     </div>
   </section>
 
   <section class="origin">
     <div class="container">
-      <blockquote>"I used this app to build itself."</blockquote>
-      <p>
-        Every design decision, every approval gate, every code review &mdash; from the phone while away from the desk. Built by an agent workflow. Approved from a garden.
-      </p>
-      <blockquote style="margin-top: 32px;">"You pour ideas in the top. You don't tell your agents what to do. They tell you what they need."</blockquote>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; text-align: left; max-width: 1080px; margin: 0 auto;">
+        <div>
+          <blockquote>"I used this app to build itself."</blockquote>
+          <p style="margin-top: 12px;">
+            Every design decision, every approval gate, every code review &mdash; from the phone while away from the desk. Built by an agent workflow. Approved from a garden.
+          </p>
+        </div>
+        <div>
+          <blockquote>"You pour ideas in the top."</blockquote>
+          <p style="margin-top: 12px;">You don't tell your agents what to do. They tell you what they need.</p>
+        </div>
+      </div>
     </div>
   </section>
 
