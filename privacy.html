@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Extendo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --sky: #e8f4fd;
+      --sky-deep: #c5e3f6;
+      --blue: #4a9eda;
+      --blue-dark: #2b7cbf;
+      --text: #2a2a3a;
+      --text-light: #6a6a7a;
+      --white: #ffffff;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.7;
+    }
+    h1, h2, h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.3;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    nav {
+      padding: 20px 0;
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1080px;
+    }
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo span { color: var(--blue); }
+    nav a.back {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    nav a.back:hover { color: var(--text); }
+    .content {
+      padding: 60px 0 100px;
+    }
+    .content h1 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .content .updated {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-bottom: 40px;
+    }
+    .content h2 {
+      font-size: 1.3rem;
+      margin-top: 36px;
+      margin-bottom: 12px;
+    }
+    .content p, .content li {
+      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
+    .content ul {
+      padding-left: 24px;
+      margin-bottom: 16px;
+    }
+    .content a {
+      color: var(--blue-dark);
+    }
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--sky-deep);
+    }
+    footer .container {
+      max-width: 1080px;
+      text-align: center;
+    }
+    footer p {
+      color: var(--text-light);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="/" class="logo">extendo<span>.</span></a>
+      <a href="/" class="back">&larr; Back to home</a>
+    </div>
+  </nav>
+
+  <section class="content">
+    <div class="container">
+      <h1>Privacy Policy</h1>
+      <p class="updated">Last updated: February 19, 2025</p>
+
+      <p>Extendo ("we," "our," "us") is an iOS and Apple Watch app that connects your AI agents to your phone. This policy explains what data we collect, how we use it, and your rights.</p>
+
+      <h2>What We Collect</h2>
+      <ul>
+        <li><strong>Account information:</strong> Email address when you sign up.</li>
+        <li><strong>Messages and decisions:</strong> Text, voice transcriptions, and decision responses you send through the app. These are transmitted between your device and your self-hosted backend infrastructure.</li>
+        <li><strong>Push notification tokens:</strong> Device tokens required to deliver push notifications via Apple Push Notification service (APNs).</li>
+        <li><strong>Voice recordings:</strong> Audio captured via push-to-talk or Apple Watch is sent to third-party transcription services (e.g., OpenAI Whisper) using API keys you provide. We do not store raw audio on our servers.</li>
+        <li><strong>Basic analytics:</strong> Crash reports and anonymous usage data to improve the app.</li>
+      </ul>
+
+      <h2>What We Don't Collect</h2>
+      <ul>
+        <li>We don't sell your data to anyone.</li>
+        <li>We don't use your data to train AI models.</li>
+        <li>We don't track you across other apps or websites.</li>
+        <li>We don't store the content of your agent conversations on our infrastructure. Your backend, your data.</li>
+      </ul>
+
+      <h2>Your Backend, Your Data</h2>
+      <p>Extendo is designed as a client for your own backend infrastructure. Messages, decisions, and artifacts are exchanged directly between the app and your self-hosted services. We act as a relay for push notifications only — we don't store or inspect message content.</p>
+
+      <h2>Third-Party Services</h2>
+      <ul>
+        <li><strong>Apple Push Notification service (APNs):</strong> Used to deliver push notifications to your device.</li>
+        <li><strong>Third-party transcription services:</strong> Voice audio is transcribed using services (e.g., OpenAI Whisper) via API keys you configure. Your keys, your provider relationship.</li>
+        <li><strong>Buttondown:</strong> Used for our mailing list if you sign up for email updates.</li>
+      </ul>
+
+      <h2>Data Retention</h2>
+      <p>We retain your account information for as long as you use the app. You can request deletion of your account and associated data at any time by contacting us.</p>
+
+      <h2>Children</h2>
+      <p>Extendo is not intended for use by anyone under 13. We don't knowingly collect data from children.</p>
+
+      <h2>Changes</h2>
+      <p>We may update this policy. We'll post changes here and update the date above.</p>
+
+      <h2>Contact</h2>
+      <p>Questions? Email us at <a href="mailto:eric@gradman.com">eric@gradman.com</a>.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>Extendo &mdash; your agents can reach you anywhere.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
