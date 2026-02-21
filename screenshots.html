@@ -56,9 +56,7 @@
     .page-header h1 { font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.03em; margin-bottom: 12px; }
     .page-header p { font-size: 1.15rem; color: var(--text-light); }
 
-    .screenshot-table {
-      padding: 48px 0 80px;
-    }
+    .screenshot-table { padding: 48px 0 80px; }
 
     .screenshot-row {
       display: grid;
@@ -77,10 +75,7 @@
       box-shadow: 0 4px 24px rgba(0,0,0,0.08);
     }
 
-    .screenshot-info h3 {
-      font-size: 1.3rem;
-      margin-bottom: 8px;
-    }
+    .screenshot-info h3 { font-size: 1.3rem; margin-bottom: 8px; }
 
     .screenshot-info .type-badge {
       display: inline-block;
@@ -105,17 +100,16 @@
       padding: 16px 20px;
       border-radius: 10px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      line-height: 1.6;
+      font-size: 0.78rem;
+      line-height: 1.7;
       overflow-x: auto;
-      white-space: pre-wrap;
-      word-break: break-all;
+      white-space: pre;
     }
 
-    .screenshot-info pre .cmd { color: #a8d8a8; }
-    .screenshot-info pre .flag { color: #9cdcfe; }
-    .screenshot-info pre .string { color: #ce9178; }
-    .screenshot-info pre .comment { color: #6a9955; }
+    .cmd { color: #a8d8a8; }
+    .flag { color: #9cdcfe; }
+    .str { color: #ce9178; }
+    .cont { color: #666; }
 
     footer { padding: 40px 0; border-top: 1px solid var(--sky-deep); }
     footer .container { display: flex; justify-content: space-between; align-items: center; }
@@ -161,11 +155,22 @@
           <h3>DAG</h3>
           <span class="type-badge">dag</span>
           <p>Dependency graphs rendered natively on your phone. Track which agents are active, which steps are done, and what's blocked.</p>
-          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo molecule-dag \
-  <span class="flag">--type</span> <span class="string">dag</span> \
-  <span class="flag">--title</span> <span class="string">"thread-sort-filter"</span> \
-  <span class="flag">--node</span> <span class="string">"spec|Discover &amp; Specify|...|#34C759|review-spec"</span> \
-  <span class="flag">--node</span> <span class="string">"impl-sort|BackendManager: sort|...|#007AFF|agent-review"</span></pre>
+          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo molecule-dag <span class="cont">\</span>
+  <span class="flag">--type</span> <span class="str">dag</span> <span class="cont">\</span>
+  <span class="flag">--title</span> <span class="str">"thread-sort-filter"</span> <span class="cont">\</span>
+  <span class="flag">--prompt</span> <span class="str">"Molecule in progress — 2 agents active"</span> <span class="cont">\</span>
+  <span class="flag">--node</span> <span class="str">"spec|Discover &amp; Specify|Write spec|#34C759|review-spec"</span> <span class="cont">\</span>
+  <span class="flag">--node</span> <span class="str">"review-spec|Human Review: Spec|Review spec|#34C759|plan"</span> <span class="cont">\</span>
+  <span class="flag">--node</span> <span class="str">"plan|Plan|Create implementation plan|#34C759|review-plan"</span> <span class="cont">\</span>
+  <span class="flag">--node</span> <span class="str">"review-plan|Human Review: Plan|Review plan|#34C759|worktree,decompose"</span> <span class="cont">\</span>
+  <span class="flag">--node</span> <span class="str">"worktree|Create Worktree|Set up feature branch|#34C759|impl-sort,impl-filter"</span> <span class="cont">\</span>
+  <span class="flag">--node</span> <span class="str">"decompose|Decompose|Break into subtasks|#34C759|impl-sort,impl-filter"</span> <span class="cont">\</span>
+  <span class="flag">--node</span> <span class="str">"impl-sort|BackendManager: sort|Sort by activity|#007AFF|impl-empty,agent-review"</span> <span class="cont">\</span>
+  <span class="flag">--node</span> <span class="str">"impl-filter|SidebarView: filter|Add filter chips|#007AFF|agent-review"</span> <span class="cont">\</span>
+  <span class="flag">--node</span> <span class="str">"impl-empty|SidebarView: empty state|Empty states|#8E8E93|agent-review"</span> <span class="cont">\</span>
+  <span class="flag">--node</span> <span class="str">"agent-review|Agent Review|Automated review|#8E8E93|human-review"</span> <span class="cont">\</span>
+  <span class="flag">--node</span> <span class="str">"human-review|Human Review: Final|Final review|#8E8E93|merge"</span> <span class="cont">\</span>
+  <span class="flag">--node</span> <span class="str">"merge|Merge &amp; Cleanup|Merge to main|#8E8E93"</span></pre>
         </div>
       </div>
 
@@ -175,11 +180,17 @@
           <h3>Progress Grid</h3>
           <span class="type-badge">progress_grid</span>
           <p>Track multiple workstreams at a glance. Each row is a feature, each column is a pipeline stage.</p>
-          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo progress-grid \
-  <span class="flag">--type</span> <span class="string">progress_grid</span> \
-  <span class="flag">--title</span> <span class="string">"Extendo Molecules"</span> \
-  <span class="flag">--columns</span> <span class="string">"SP:Spec,PL:Plan,IM:Impl,RV:Review,MG:Merge"</span> \
-  <span class="flag">--row</span> <span class="string">"thread-sort-filter||green|green|yellow|gray|gray"</span></pre>
+          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo progress-grid <span class="cont">\</span>
+  <span class="flag">--type</span> <span class="str">progress_grid</span> <span class="cont">\</span>
+  <span class="flag">--title</span> <span class="str">"Extendo Molecules"</span> <span class="cont">\</span>
+  <span class="flag">--prompt</span> <span class="str">"Feature pipeline status"</span> <span class="cont">\</span>
+  <span class="flag">--columns</span> <span class="str">"SP:Spec,PL:Plan,IM:Impl,RV:Review,MG:Merge"</span> <span class="cont">\</span>
+  <span class="flag">--row</span> <span class="str">"dag-artifact||green|green|green|green|green"</span> <span class="cont">\</span>
+  <span class="flag">--row</span> <span class="str">"progress-grid-artifact||green|green|green|green|green"</span> <span class="cont">\</span>
+  <span class="flag">--row</span> <span class="str">"thread-sort-filter||green|green|yellow|gray|gray"</span> <span class="cont">\</span>
+  <span class="flag">--row</span> <span class="str">"thread-list-metadata||green|yellow|gray|gray|gray"</span> <span class="cont">\</span>
+  <span class="flag">--row</span> <span class="str">"artifact-deep-links||yellow|gray|gray|gray|gray"</span> <span class="cont">\</span>
+  <span class="flag">--row</span> <span class="str">"decision-tombstones||green|green|green|yellow|gray"</span></pre>
         </div>
       </div>
 
@@ -189,12 +200,17 @@
           <h3>Checklist</h3>
           <span class="type-badge">checklist</span>
           <p>Select multiple items. Review and approve sprint tasks, feature flags, or deployment checklists.</p>
-          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo todo-checklist \
-  <span class="flag">--type</span> <span class="string">checklist</span> \
-  <span class="flag">--title</span> <span class="string">"Sprint Tasks"</span> \
-  <span class="flag">--item</span> <span class="string">"migrate-db:Migrate user table to new schema"</span> \
-  <span class="flag">--item</span> <span class="string">"fix-auth:Fix OAuth callback race condition"</span> \
-  <span class="flag">--completion</span> <span class="string">all_answered</span></pre>
+          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo todo-checklist <span class="cont">\</span>
+  <span class="flag">--type</span> <span class="str">checklist</span> <span class="cont">\</span>
+  <span class="flag">--title</span> <span class="str">"Sprint Tasks"</span> <span class="cont">\</span>
+  <span class="flag">--prompt</span> <span class="str">"Review and approve each task for this sprint"</span> <span class="cont">\</span>
+  <span class="flag">--item</span> <span class="str">"migrate-db:Migrate user table to new schema:Adds email_verified column"</span> <span class="cont">\</span>
+  <span class="flag">--item</span> <span class="str">"fix-auth:Fix OAuth callback race condition:Users get 403 after Google login"</span> <span class="cont">\</span>
+  <span class="flag">--item</span> <span class="str">"cache-layer:Add Redis caching to /api/feed:P95 latency 1.2s, target 200ms"</span> <span class="cont">\</span>
+  <span class="flag">--item</span> <span class="str">"dark-mode:Implement dark mode toggle:CSS custom properties in place"</span> <span class="cont">\</span>
+  <span class="flag">--item</span> <span class="str">"onboard-flow:Redesign onboarding flow:New Figma mocks from design"</span> <span class="cont">\</span>
+  <span class="flag">--item</span> <span class="str">"api-docs:Update OpenAPI spec for v2 endpoints:Three new endpoints"</span> <span class="cont">\</span>
+  <span class="flag">--completion</span> <span class="str">all_answered</span></pre>
         </div>
       </div>
 
@@ -204,11 +220,14 @@
           <h3>Multiple Choice</h3>
           <span class="type-badge">multiple_choice</span>
           <p>Pick one from a list. Each option has a title and description so agents can give you full context.</p>
-          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo implementation-choice \
-  <span class="flag">--type</span> <span class="string">multiple_choice</span> \
-  <span class="flag">--title</span> <span class="string">"Where should we implement the rate limiter?"</span> \
-  <span class="flag">--option</span> <span class="string">"backend:Backend API:Express middleware"</span> \
-  <span class="flag">--option</span> <span class="string">"edge:Edge / CDN:Cloudflare Workers"</span></pre>
+          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo implementation-choice <span class="cont">\</span>
+  <span class="flag">--type</span> <span class="str">multiple_choice</span> <span class="cont">\</span>
+  <span class="flag">--title</span> <span class="str">"Where should we implement the rate limiter?"</span> <span class="cont">\</span>
+  <span class="flag">--prompt</span> <span class="str">"Each option has trade-offs for latency, state, and complexity."</span> <span class="cont">\</span>
+  <span class="flag">--option</span> <span class="str">"backend:Backend API:Express middleware — simple, per-instance counters"</span> <span class="cont">\</span>
+  <span class="flag">--option</span> <span class="str">"core:Core Library:Shared logic — reusable across services, needs Redis"</span> <span class="cont">\</span>
+  <span class="flag">--option</span> <span class="str">"edge:Edge / CDN:Cloudflare Workers — lowest latency, limited state"</span> <span class="cont">\</span>
+  <span class="flag">--option</span> <span class="str">"gateway:API Gateway:Kong/Nginx — centralized, no code changes needed"</span></pre>
         </div>
       </div>
 
@@ -218,12 +237,24 @@
           <h3>Categorize</h3>
           <span class="type-badge">categorize</span>
           <p>Drag items into categories. Kanban-style triage — sort tickets into priority buckets from your phone.</p>
-          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo kanban-triage \
-  <span class="flag">--type</span> <span class="string">categorize</span> \
-  <span class="flag">--title</span> <span class="string">"Sprint Triage"</span> \
-  <span class="flag">--heading</span> <span class="string">"p0:P0 — Ship Today"</span> \
-  <span class="flag">--heading</span> <span class="string">"p1:P1 — This Sprint"</span> \
-  <span class="flag">--item</span> <span class="string">"p0/ENG-401:Login crash on iOS 18"</span></pre>
+          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo kanban-triage <span class="cont">\</span>
+  <span class="flag">--type</span> <span class="str">categorize</span> <span class="cont">\</span>
+  <span class="flag">--title</span> <span class="str">"Sprint Triage"</span> <span class="cont">\</span>
+  <span class="flag">--prompt</span> <span class="str">"Drag tickets into the right priority bucket"</span> <span class="cont">\</span>
+  <span class="flag">--heading</span> <span class="str">"p0:P0 — Ship Today"</span> <span class="cont">\</span>
+  <span class="flag">--heading</span> <span class="str">"p1:P1 — This Sprint"</span> <span class="cont">\</span>
+  <span class="flag">--heading</span> <span class="str">"p2:P2 — Next Sprint"</span> <span class="cont">\</span>
+  <span class="flag">--heading</span> <span class="str">"backlog:Backlog"</span> <span class="cont">\</span>
+  <span class="flag">--item</span> <span class="str">"p0/ENG-401:Login crash on iOS 18"</span> <span class="cont">\</span>
+  <span class="flag">--item</span> <span class="str">"p0/ENG-388:Payment webhook timeout"</span> <span class="cont">\</span>
+  <span class="flag">--item</span> <span class="str">"p1/ENG-412:Dashboard slow query"</span> <span class="cont">\</span>
+  <span class="flag">--item</span> <span class="str">"p1/ENG-395:Add SSO for enterprise"</span> <span class="cont">\</span>
+  <span class="flag">--item</span> <span class="str">"p2/ENG-420:Migrate to Postgres 16"</span> <span class="cont">\</span>
+  <span class="flag">--item</span> <span class="str">"p2/ENG-433:Redesign settings page"</span> <span class="cont">\</span>
+  <span class="flag">--item</span> <span class="str">"backlog/ENG-441:Add CSV export"</span> <span class="cont">\</span>
+  <span class="flag">--item</span> <span class="str">"backlog/ENG-445:Dark mode for admin panel"</span> <span class="cont">\</span>
+  <span class="flag">--item</span> <span class="str">"p1/ENG-402:Fix email threading"</span> <span class="cont">\</span>
+  <span class="flag">--item</span> <span class="str">"backlog/ENG-450:Upgrade React to v19"</span></pre>
         </div>
       </div>
 
@@ -233,10 +264,14 @@
           <h3>Yes / No — Merge Gate</h3>
           <span class="type-badge">yes_no</span>
           <p>Binary approval gates. PR stats, test results, reviews — all in the prompt. Tap and done.</p>
-          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo merge-gate \
-  <span class="flag">--type</span> <span class="string">yes_no</span> \
-  <span class="flag">--title</span> <span class="string">"Merge to main?"</span> \
-  <span class="flag">--prompt</span> <span class="string">"PR #247 — 12 files changed, 847 tests passing"</span></pre>
+          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo merge-gate <span class="cont">\</span>
+  <span class="flag">--type</span> <span class="str">yes_no</span> <span class="cont">\</span>
+  <span class="flag">--title</span> <span class="str">"Merge to main?"</span> <span class="cont">\</span>
+  <span class="flag">--prompt</span> <span class="str">"PR #247 — Add rate limiting middleware
+12 files changed, +340 -28
+All 847 tests passing
+2 approving reviews
+No merge conflicts"</span></pre>
         </div>
       </div>
 
@@ -246,12 +281,13 @@
           <h3>Dark Mode</h3>
           <span class="type-badge">multiple_choice</span>
           <p>Everything looks great in dark mode too. Same structured UI, easier on the eyes at 2am.</p>
-          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo dark-mode-placement \
-  <span class="flag">--type</span> <span class="string">multiple_choice</span> \
-  <span class="flag">--title</span> <span class="string">"Dark Mode Toggle Placement"</span> \
-  <span class="flag">--option</span> <span class="string">"settings:Settings View:Standard iOS pattern"</span> \
-  <span class="flag">--option</span> <span class="string">"sidebar:Settings + Sidebar Quick-Toggle"</span> \
-  <span class="flag">--option</span> <span class="string">"system:System Only (No Toggle)"</span></pre>
+          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo dark-mode-placement <span class="cont">\</span>
+  <span class="flag">--type</span> <span class="str">multiple_choice</span> <span class="cont">\</span>
+  <span class="flag">--title</span> <span class="str">"Dark Mode Toggle Placement"</span> <span class="cont">\</span>
+  <span class="flag">--prompt</span> <span class="str">"Where should the dark mode toggle live?"</span> <span class="cont">\</span>
+  <span class="flag">--option</span> <span class="str">"settings:Settings View:Standard iOS pattern — users know to look here"</span> <span class="cont">\</span>
+  <span class="flag">--option</span> <span class="str">"sidebar:Settings + Sidebar Quick-Toggle:Best UX but more implementation"</span> <span class="cont">\</span>
+  <span class="flag">--option</span> <span class="str">"system:System Only (No Toggle):Zero UI work — just works"</span></pre>
         </div>
       </div>
 
@@ -261,10 +297,13 @@
           <h3>Yes / No — Deploy</h3>
           <span class="type-badge">yes_no</span>
           <p>Ship from your pocket. Build info, test status, bundle size — everything you need to say yes.</p>
-          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo deploy-iphone \
-  <span class="flag">--type</span> <span class="string">yes_no</span> \
-  <span class="flag">--title</span> <span class="string">"Deploy to iPhone?"</span> \
-  <span class="flag">--prompt</span> <span class="string">"Build 2.4.1 (b347) — all tests passing, 12.3 MB"</span></pre>
+          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo deploy-iphone <span class="cont">\</span>
+  <span class="flag">--type</span> <span class="str">yes_no</span> <span class="cont">\</span>
+  <span class="flag">--title</span> <span class="str">"Deploy to iPhone?"</span> <span class="cont">\</span>
+  <span class="flag">--prompt</span> <span class="str">"Build 2.4.1 (b347) is ready.
+All UI tests passing on Simulator
+Accessibility audit clean
+Bundle size: 12.3 MB (-0.4 MB)"</span></pre>
         </div>
       </div>
 
@@ -274,10 +313,21 @@
           <h3>Document Review</h3>
           <span class="type-badge">document_review</span>
           <p>Read and annotate specs, plans, or diffs right on your phone. Approve or send back with feedback.</p>
-          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo ios-dark-mode-spec-review \
-  <span class="flag">--type</span> <span class="string">document_review</span> \
-  <span class="flag">--title</span> <span class="string">"Spec Review: iOS Dark Mode"</span> \
-  <span class="flag">--document</span> <span class="string">"# Dark mode support with Settings toggle..."</span></pre>
+          <pre><span class="cmd">extendo</span> <span class="flag">artifact create</span> demo ios-dark-mode-spec-review <span class="cont">\</span>
+  <span class="flag">--type</span> <span class="str">document_review</span> <span class="cont">\</span>
+  <span class="flag">--title</span> <span class="str">"Spec Review: iOS Dark Mode"</span> <span class="cont">\</span>
+  <span class="flag">--prompt</span> <span class="str">"Review the dark mode spec. Approve or annotate."</span> <span class="cont">\</span>
+  <span class="flag">--document</span> <span class="str">"# Dark mode support with Settings toggle
+
+## Summary
+Add dark mode support with a user-facing appearance
+picker in Settings. Three modes: System, Light, Dark.
+
+## What needs to change
+1. New @AppStorage key — appearanceMode
+2. SettingsView — new Appearance section
+3. Apply .preferredColorScheme() at root
+4. Review AccentColor contrast in dark mode"</span></pre>
         </div>
       </div>
 
