@@ -667,17 +667,6 @@
       <h2>Works with any orchestrator.</h2>
       <p>Not an orchestrator. Not a workflow tool. The human interface layer for whatever you already use.</p>
       <p style="margin-top: 12px;">You own the backend infrastructure. No subscriptions. Works as a standalone chat + decision interface, or use it alongside your existing chat system (Slack, Telegram, etc).</p>
-      <div class="code-block">
-        <span class="comment"># Send a message to your phone</span><br>
-        <span class="cmd">extendo</span> <span class="flag">new</span> <span class="string">ops</span> <span class="string">"Build complete. 3 warnings."</span><br><br>
-        <span class="comment"># Yes/no gate — blocks until you respond</span><br>
-        <span class="cmd">extendo</span> <span class="flag">artifact create</span> <span class="string">ops deploy</span><br>
-        &nbsp;&nbsp;<span class="flag">--type</span> <span class="string">yes_no</span> <span class="flag">--title</span> <span class="string">"Ship it?"</span> <span class="flag">--wait --json</span><br><br>
-        <span class="comment"># Document review — annotate a spec from your phone</span><br>
-        <span class="cmd">extendo</span> <span class="flag">artifact create</span> <span class="string">ops spec-review</span><br>
-        &nbsp;&nbsp;<span class="flag">--type</span> <span class="string">document_review</span> <span class="flag">--title</span> <span class="string">"Review spec"</span><br>
-        &nbsp;&nbsp;<span class="flag">--document-file</span> <span class="string">spec.md</span> <span class="flag">--wait</span>
-      </div>
     </div>
   </section>
 
