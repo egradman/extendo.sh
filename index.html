@@ -503,18 +503,13 @@
       grid-template-columns: 260px 1fr;
       gap: 28px;
       align-items: start;
+      align-content: start;
     }
 
     .carousel-img img {
       width: 100%;
       border-radius: 12px;
       box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-    }
-
-    .carousel-code h3 {
-      font-size: 1.2rem;
-      margin-bottom: 6px;
-      color: var(--text);
     }
 
     .carousel-badge {
@@ -635,13 +630,15 @@
         I turned human decision-making into a tool-call because I was tired of using my phone to ssh into my laptop at parties. Structured decisions on your phone from AI agents, voice-first, Apple Watch, open protocol. Any agent can call the CLI and block until the human responds.
       </p>
       <div class="carousel" id="artifact-carousel">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <h3 id="carousel-title" style="font-size: 1.3rem; margin-bottom: 6px;"></h3>
+          <span class="carousel-badge" id="carousel-badge"></span>
+        </div>
         <div class="carousel-slide">
           <div class="carousel-img">
             <img id="carousel-img" src="" alt="">
           </div>
           <div class="carousel-code">
-            <h3 id="carousel-title"></h3>
-            <span class="carousel-badge" id="carousel-badge"></span>
             <pre id="carousel-pre"></pre>
           </div>
         </div>
