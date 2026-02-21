@@ -492,6 +492,110 @@
         gap: 16px;
       }
     }
+    /* Carousel */
+    .carousel {
+      max-width: 900px;
+      margin: 40px auto 0;
+    }
+
+    .carousel-slide {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .carousel-img img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    .carousel-code h3 {
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .carousel-badge {
+      display: inline-block;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.78rem;
+      background: rgba(255,255,255,0.3);
+      color: var(--blue-dark);
+      padding: 2px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+
+    .carousel-code pre {
+      background: var(--text);
+      color: #d4d4d4;
+      padding: 16px 20px;
+      border-radius: 10px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.75rem;
+      line-height: 1.7;
+      overflow-x: auto;
+      white-space: pre;
+      margin: 0;
+    }
+
+    .carousel-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .carousel-btn {
+      background: var(--white);
+      border: 2px solid var(--sky-deep);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--text);
+    }
+
+    .carousel-btn:hover {
+      border-color: var(--blue);
+      transform: translateY(-1px);
+    }
+
+    .carousel-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--sky-deep);
+      transition: background 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .carousel-dot.active {
+      background: var(--blue);
+    }
+
+    @media (max-width: 768px) {
+      .carousel-slide {
+        grid-template-columns: 1fr;
+      }
+      .carousel-img img {
+        max-width: 220px;
+        margin: 0 auto;
+        display: block;
+      }
+    }
   </style>
 </head>
 <body>
@@ -537,17 +641,24 @@
       <p>
         I turned human decision-making into a tool-call because I was tired of using my phone to ssh into my laptop at parties. Structured decisions on your phone from AI agents, voice-first, Apple Watch, open protocol. Any agent can call the CLI and block until the human responds.
       </p>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 640px; margin: 40px auto 24px;">
-        <div>
-          <img src="screenshots/categorize.jpg" alt="Kanban-style sprint triage" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
-          <p style="margin-top: 12px; font-size: 0.9rem; color: var(--text-light);">Kanban triage</p>
+      <div class="carousel" id="artifact-carousel">
+        <div class="carousel-slide">
+          <div class="carousel-img">
+            <img id="carousel-img" src="" alt="">
+          </div>
+          <div class="carousel-code">
+            <h3 id="carousel-title"></h3>
+            <span class="carousel-badge" id="carousel-badge"></span>
+            <pre id="carousel-pre"></pre>
+          </div>
         </div>
-        <div>
-          <img src="screenshots/dag.jpg" alt="DAG dependency graph" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
-          <p style="margin-top: 12px; font-size: 0.9rem; color: var(--text-light);">Dependency graph</p>
+        <div class="carousel-nav">
+          <button onclick="carouselPrev()" class="carousel-btn">&larr;</button>
+          <span class="carousel-dots" id="carousel-dots"></span>
+          <button onclick="carouselNext()" class="carousel-btn">&rarr;</button>
         </div>
+        <a href="screenshots.html" style="color: var(--blue-dark); font-weight: 600; font-size: 1rem; text-decoration: none; display: block; text-align: center; margin-top: 12px;">See all screenshots &rarr;</a>
       </div>
-      <a href="screenshots.html" style="color: var(--blue-dark); font-weight: 600; font-size: 1rem; text-decoration: none;">See all screenshots &rarr;</a>
     </div>
   </section>
 
@@ -706,6 +817,75 @@
 
       return false;
     }
+  </script>
+  <script>
+    var slides = [
+      {
+        img: "screenshots/dag.jpg", alt: "DAG dependency graph",
+        title: "DAG", badge: "dag",
+        code: "extendo artifact create demo molecule-dag \\\n  --type dag \\\n  --title \"thread-sort-filter\" \\\n  --prompt \"Molecule in progress — 2 agents active\" \\\n  --node \"spec|Discover & Specify|...|#34C759|review-spec\" \\\n  --node \"impl-sort|BackendManager: sort|...|#007AFF|agent-review\" \\\n  --node \"merge|Merge & Cleanup|Merge to main|#8E8E93\""
+      },
+      {
+        img: "screenshots/progress-grid.jpg", alt: "Progress Grid",
+        title: "Progress Grid", badge: "progress_grid",
+        code: "extendo artifact create demo progress-grid \\\n  --type progress_grid \\\n  --title \"Extendo Molecules\" \\\n  --columns \"SP:Spec,PL:Plan,IM:Impl,RV:Review,MG:Merge\" \\\n  --row \"thread-sort-filter||green|green|yellow|gray|gray\" \\\n  --row \"decision-tombstones||green|green|green|yellow|gray\""
+      },
+      {
+        img: "screenshots/checklist.jpg", alt: "Checklist",
+        title: "Checklist", badge: "checklist",
+        code: "extendo artifact create demo todo-checklist \\\n  --type checklist \\\n  --title \"Sprint Tasks\" \\\n  --prompt \"Review and approve each task\" \\\n  --item \"migrate-db:Migrate user table to new schema\" \\\n  --item \"fix-auth:Fix OAuth callback race condition\" \\\n  --item \"cache-layer:Add Redis caching to /api/feed\" \\\n  --completion all_answered"
+      },
+      {
+        img: "screenshots/multiple-choice.jpg", alt: "Multiple Choice",
+        title: "Multiple Choice", badge: "multiple_choice",
+        code: "extendo artifact create demo implementation-choice \\\n  --type multiple_choice \\\n  --title \"Where should we implement the rate limiter?\" \\\n  --option \"backend:Backend API:Express middleware\" \\\n  --option \"core:Core Library:Shared logic, needs Redis\" \\\n  --option \"edge:Edge / CDN:Cloudflare Workers\" \\\n  --option \"gateway:API Gateway:Kong/Nginx, no code changes\""
+      },
+      {
+        img: "screenshots/categorize.jpg", alt: "Categorize / Kanban",
+        title: "Categorize", badge: "categorize",
+        code: "extendo artifact create demo kanban-triage \\\n  --type categorize \\\n  --title \"Sprint Triage\" \\\n  --prompt \"Drag tickets into the right priority bucket\" \\\n  --heading \"p0:P0 — Ship Today\" \\\n  --heading \"p1:P1 — This Sprint\" \\\n  --item \"p0/ENG-401:Login crash on iOS 18\" \\\n  --item \"p1/ENG-412:Dashboard slow query\""
+      },
+      {
+        img: "screenshots/yes-no-merge.jpg", alt: "Yes/No — Merge gate",
+        title: "Yes / No", badge: "yes_no",
+        code: "extendo artifact create demo merge-gate \\\n  --type yes_no \\\n  --title \"Merge to main?\" \\\n  --prompt \"PR #247 — Add rate limiting middleware\n12 files changed, +340 -28\nAll 847 tests passing\n2 approving reviews\""
+      },
+      {
+        img: "screenshots/document-review.jpg", alt: "Document Review",
+        title: "Document Review", badge: "document_review",
+        code: "extendo artifact create demo spec-review \\\n  --type document_review \\\n  --title \"Spec Review: iOS Dark Mode\" \\\n  --prompt \"Review the spec. Approve or annotate.\" \\\n  --document-file spec.md"
+      }
+    ];
+
+    var currentSlide = 0;
+
+    function renderSlide(i) {
+      var s = slides[i];
+      document.getElementById('carousel-img').src = s.img;
+      document.getElementById('carousel-img').alt = s.alt;
+      document.getElementById('carousel-title').textContent = s.title;
+      document.getElementById('carousel-badge').textContent = s.badge;
+      document.getElementById('carousel-pre').textContent = s.code;
+      var dots = document.querySelectorAll('.carousel-dot');
+      dots.forEach(function(d, j) { d.className = j === i ? 'carousel-dot active' : 'carousel-dot'; });
+    }
+
+    function carouselNext() { currentSlide = (currentSlide + 1) % slides.length; renderSlide(currentSlide); }
+    function carouselPrev() { currentSlide = (currentSlide - 1 + slides.length) % slides.length; renderSlide(currentSlide); }
+
+    // Build dots
+    var dotsEl = document.getElementById('carousel-dots');
+    slides.forEach(function(_, i) {
+      var dot = document.createElement('button');
+      dot.className = 'carousel-dot';
+      dot.onclick = function() { currentSlide = i; renderSlide(i); };
+      dotsEl.appendChild(dot);
+    });
+
+    renderSlide(0);
+
+    // Auto-advance every 6 seconds
+    setInterval(carouselNext, 6000);
   </script>
 </body>
 </html>
