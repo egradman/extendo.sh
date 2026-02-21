@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screenshots — Extendo</title>
+  <meta name="description" content="See Extendo's structured decision artifacts in action — yes/no gates, rankings, checklists, kanban, DAGs, document review, and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --sky: #e8f4fd;
+      --sky-deep: #c5e3f6;
+      --blue: #4a9eda;
+      --blue-dark: #2b7cbf;
+      --lavender: #e8e0f0;
+      --peach: #fde8d8;
+      --mint: #d8f0e8;
+      --text: #2a2a3a;
+      --text-light: #6a6a7a;
+      --white: #ffffff;
+      --radius: 16px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.2;
+    }
+
+    a { color: var(--blue-dark); }
+    a:hover { color: var(--blue); }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    nav {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--sky-deep);
+    }
+
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .logo span { color: var(--blue); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-light);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--text); }
+
+    .page-header {
+      padding: 60px 0 40px;
+      background: linear-gradient(180deg, var(--white) 0%, var(--sky) 100%);
+    }
+
+    .page-header h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+
+    .page-header p {
+      font-size: 1.15rem;
+      color: var(--text-light);
+    }
+
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 32px;
+      padding: 48px 0 80px;
+    }
+
+    .screenshot-card {
+      background: var(--sky);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+
+    .screenshot-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .screenshot-card:nth-child(2) { background: var(--lavender); }
+    .screenshot-card:nth-child(3) { background: var(--mint); }
+    .screenshot-card:nth-child(4) { background: var(--peach); }
+    .screenshot-card:nth-child(5) { background: #f0e8f8; }
+    .screenshot-card:nth-child(6) { background: #e0f0f8; }
+    .screenshot-card:nth-child(7) { background: var(--peach); }
+    .screenshot-card:nth-child(8) { background: var(--mint); }
+    .screenshot-card:nth-child(9) { background: var(--lavender); }
+
+    .screenshot-card img {
+      width: 100%;
+      display: block;
+    }
+
+    .screenshot-card .caption {
+      padding: 16px 20px;
+    }
+
+    .screenshot-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+
+    .screenshot-card p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin: 0;
+    }
+
+    .screenshot-card code {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.75rem;
+      background: rgba(0,0,0,0.06);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--sky-deep);
+    }
+
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      color: var(--text-light);
+      font-size: 0.85rem;
+    }
+
+    footer .links {
+      display: flex;
+      gap: 24px;
+    }
+
+    footer a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+
+    footer a:hover { color: var(--text); }
+
+    @media (max-width: 768px) {
+      .screenshot-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .nav-links { gap: 20px; }
+      footer .container { flex-direction: column; gap: 16px; }
+    }
+
+    @media (max-width: 480px) {
+      .screenshot-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="/" class="logo">extendo<span>.</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="screenshots.html" class="active">Screenshots</a>
+        <a href="https://github.com/egradman/extendo-cli" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="container">
+      <h1>Screenshots</h1>
+      <p>Structured decision artifacts — the UI your agents send to your phone.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="screenshot-grid">
+
+      <div class="screenshot-card">
+        <img src="screenshots/yes-no-deploy.jpg" alt="Yes/No — Deploy to prod?">
+        <div class="caption">
+          <h3>Yes / No</h3>
+          <p>Binary approval gate. Tap and done.</p>
+          <code>extendo decide --type yes_no</code>
+        </div>
+      </div>
+
+      <div class="screenshot-card">
+        <img src="screenshots/yes-no-merge.jpg" alt="Yes/No — Merge gate">
+        <div class="caption">
+          <h3>Yes / No — Merge Gate</h3>
+          <p>Approve a merge from your pocket.</p>
+          <code>extendo decide --type yes_no</code>
+        </div>
+      </div>
+
+      <div class="screenshot-card">
+        <img src="screenshots/multiple-choice.jpg" alt="Multiple Choice">
+        <div class="caption">
+          <h3>Multiple Choice</h3>
+          <p>Pick one from a list. Clean, fast decisions.</p>
+          <code>extendo decide --type multiple_choice</code>
+        </div>
+      </div>
+
+      <div class="screenshot-card">
+        <img src="screenshots/dark-mode-choice.jpg" alt="Multiple Choice — Dark Mode">
+        <div class="caption">
+          <h3>Multiple Choice — Dark Mode</h3>
+          <p>Works beautifully in dark mode too.</p>
+          <code>extendo decide --type multiple_choice</code>
+        </div>
+      </div>
+
+      <div class="screenshot-card">
+        <img src="screenshots/checklist.jpg" alt="Checklist">
+        <div class="caption">
+          <h3>Checklist</h3>
+          <p>Select multiple items. Check what you want.</p>
+          <code>extendo decide --type checklist</code>
+        </div>
+      </div>
+
+      <div class="screenshot-card">
+        <img src="screenshots/categorize.jpg" alt="Categorize / Kanban">
+        <div class="caption">
+          <h3>Categorize</h3>
+          <p>Drag items into categories. Kanban-style triage.</p>
+          <code>extendo artifact --type categorize</code>
+        </div>
+      </div>
+
+      <div class="screenshot-card">
+        <img src="screenshots/dag.jpg" alt="DAG">
+        <div class="caption">
+          <h3>DAG</h3>
+          <p>Dependency graphs rendered natively on your phone.</p>
+          <code>extendo artifact --type dag</code>
+        </div>
+      </div>
+
+      <div class="screenshot-card">
+        <img src="screenshots/progress-grid.jpg" alt="Progress Grid">
+        <div class="caption">
+          <h3>Progress Grid</h3>
+          <p>Track multiple workstreams at a glance.</p>
+          <code>extendo artifact --type progress_grid</code>
+        </div>
+      </div>
+
+      <div class="screenshot-card">
+        <img src="screenshots/document-review.jpg" alt="Document Review">
+        <div class="caption">
+          <h3>Document Review</h3>
+          <p>Read and annotate specs, plans, or diffs right on your phone.</p>
+          <code>extendo artifact --type document_review</code>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>Extendo &mdash; your agents can reach you anywhere.</p>
+      <div class="links">
+        <a href="privacy.html">Privacy</a>
+        <a href="https://github.com/egradman/extendo-cli" target="_blank">GitHub</a>
+        <a href="https://x.com/egradman" target="_blank">@egradman</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
